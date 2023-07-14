@@ -1,6 +1,9 @@
 import express from "express";
 import cors from "cors";
 import dotenv from 'dotenv'
+import { criarCompeticao } from "./endpoints/criarCompeticao";
+import { pegarCompeticao } from "./endpoints/pegarCompeticao";
+import { resultados } from "./endpoints/resultados";
 
 dotenv.config()
 
@@ -18,35 +21,11 @@ app.listen(process.env.PORT || 3003, () => {
     res.send('Hello World!')
 })
 
-const competicoes = []
-app.post('/competicao', (req, res) => {
-    const { nome, dataInicio, dataFim } = req.body
 
-    const competicao = {
-        nome,
-        dataInicio,
-        dataFim
-    }
+app.post('/competicao', criarCompeticao);
 
-    competicoes.push(competicao)
+app.get('/competicao', pegarCompeticao);
 
-    res.status(201).json(competicao)
-})
-
-const resultados = []
-app.post('/competicao/resultados', (req, res) => {
-    const { competicao, atleta, value, unidade } = req.body
-
-    const resultado = {
-        competicao,
-        atleta,
-        value,
-        unidade
-    }
-
-    resultados.push(resultado)
-
-    return res.status(201).json(resultado)
-})
+app.post('/competicao/resultados', resultados)
 
 
