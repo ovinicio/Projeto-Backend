@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import { criarCompeticao } from "./endpoints/criarCompeticao";
 import { pegarCompeticao } from "./endpoints/pegarCompeticao";
 import { resultados } from "./endpoints/resultados";
+import { finalizarCompeticao } from "./endpoints/finalizarCompeticao";
 
 dotenv.config()
 
@@ -27,5 +28,7 @@ app.post('/competicao', criarCompeticao);
 app.get('/competicao', pegarCompeticao);
 
 app.post('/competicao/resultados', resultados)
+
+app.put('/competicao/:id', finalizarCompeticao)
 
 

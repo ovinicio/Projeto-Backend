@@ -6,6 +6,8 @@ CREATE TABLE Competicao (
     dataFim VARCHAR(255)
 );
 
+ALTER TABLE Competicao ADD ativo BOOLEAN DEFAULT 1;
+
 CREATE TABLE Resultados (
     id INT AUTO_INCREMENT NOT NULL primary key,
     nomeAtleta varchar(255),
