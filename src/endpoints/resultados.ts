@@ -10,9 +10,23 @@ export const resultados = async (req: Request, res: Response) => {
     const unidade = req.body.unidade;
     const competicao_id = req.body.competicao_id;
 
-    if (!nomeAtleta || ! valor || !unidade || !competicao_id) {
+    if (!nomeAtleta || !valor || !unidade || !competicao_id) {
         throw new Error("Dados inválidos");
     }
+
+    const competicao = await connection("Competicao")
+    .select("ativo")
+    .where({id: competicao_id})
+    .first();
+    
+    if(!competicao) {
+      throw new Error("Competição não encontrada!");
+    }
+
+    if(!competicao.ativo) {
+      throw new Error("Não é possivel adicionar um resultado em uma competição ja finalizada!"); 
+    }
+
     await connection("Resultados").insert({
       nomeAtleta,
       valor,
